@@ -10,7 +10,9 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.ColorSensorCommand;
 import frc.robot.commands.FlywheelCommand;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Flywheel;
 
 
@@ -25,7 +27,9 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     private final Flywheel flywheel = new Flywheel();
     
-    private final FlywheelCommand autoCommand = new FlywheelCommand(flywheel);
+    private final FlywheelCommand flywheelCommand = new FlywheelCommand(flywheel);
+    private final ColorSensor ColorSensor = new ColorSensor();
+    private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
     
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
@@ -47,7 +51,9 @@ public class RobotContainer
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
-        spinButton.whileHeld(autoCommand);
+        spinButton.whileHeld(flywheelCommand);
+        JoystickButton colorSensorButton = new JoystickButton(driverController, 4);
+        colorSensorButton.whileHeld(ColorSensorCommand);
     }
     
     
@@ -59,6 +65,6 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         // An FlywheelCommand will run in autonomous
-        return autoCommand;
+        return flywheelCommand;
     }
 }
