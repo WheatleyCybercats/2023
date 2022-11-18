@@ -10,10 +10,10 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.ColorSensorCommand;
 import frc.robot.commands.FlywheelCommand;
-import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.commands.DriveWithJoysticks;
+import frc.robot.commands.TimedDrive;
 
 
 /**
@@ -27,19 +27,18 @@ public class RobotContainer
     // The robot's subsystems and commands are defined here...
     private final Flywheel flywheel = new Flywheel();
     
-    private final FlywheelCommand flywheelCommand = new FlywheelCommand(flywheel);
-    private final ColorSensor ColorSensor = new ColorSensor();
-    private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
+    private final FlywheelCommand autoCommand = new FlywheelCommand(flywheel);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
-    
+    public static Joystick operatorController = new Joystick(Constants.OperatorController);
+
+    private final DriveTrain drivetrain = new DriveTrain();
+
     /** The container for the robot. Contains subsystems, OI devices, and commands. */
     public RobotContainer()
     {
         // Configure the button bindings
         configureButtonBindings();
     }
-    
-    
     /**
      * Use this method to define your button->command mappings. Buttons can be created by
      * instantiating a {@link GenericHID} or one of its subclasses ({@link
@@ -51,9 +50,9 @@ public class RobotContainer
         // Add button to command mappings here.
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
-        spinButton.whileHeld(flywheelCommand);
-        JoystickButton colorSensorButton = new JoystickButton(driverController, 4);
-        colorSensorButton.whileHeld(ColorSensorCommand);
+        spinButton.whileHeld(autoCommand);
+        JoystickButton
+
     }
     
     
@@ -65,6 +64,6 @@ public class RobotContainer
     public Command getAutonomousCommand()
     {
         // An FlywheelCommand will run in autonomous
-        return flywheelCommand;
+        return autoCommand;
     }
 }

@@ -19,6 +19,6 @@ public final class Constants {
     public static final double bottomFlyWheelMotorSetSpeed = 0.5;
     public static final double topFlyWheelMotorSetSpeed = 0.5;
     public static final int DriveJoystick = 0;
-    public static final int indexMotorID = 10;
+
 
 }
