@@ -53,10 +53,10 @@ public class ColorSensor extends SubsystemBase {
                 indexer.set(1);
                 break;
             case "red":
-                indexer.set(2);
+                indexer.set(1);
                 break;
             default:
-                indexer.set(0);
+                indexer.set(1);
                 break;
         }
     }

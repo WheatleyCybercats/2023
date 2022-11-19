@@ -5,10 +5,11 @@
 
 package frc.robot;
 
+import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
-
+import frc.robot.subsystems.DriveTrain;
 
 
 /**
@@ -22,6 +23,8 @@ public class Robot extends TimedRobot
     private Command autonomousCommand;
     
     private RobotContainer robotContainer;
+    private Joystick joystick = new Joystick(0);
+    private DriveTrain driveTrain = new DriveTrain();
     
     
     /**
@@ -99,7 +102,27 @@ public class Robot extends TimedRobot
     
     /** This method is called periodically during operator control. */
     @Override
-    public void teleopPeriodic() {}
+    public void teleopPeriodic() {
+        double speed = joystick.getRawAxis(1) * 0.8;
+        if (speed < 0.03 && speed > -0.03)
+        {
+            speed = 0;
+        }
+        double turn = joystick.getRawAxis(4) * 0.7;
+        if (turn < 0.02 && turn > -0.02)
+        {
+            turn = 0;
+        }
+
+        double left = speed + turn;
+        double right = speed - turn;
+
+        /**When switched the + and -, both front, back and side becomes inverted.*/
+
+        driveTrain.setRightMotors(right);
+        driveTrain.setLeftMotors(left);
+        /**when negate the right, the turning becomes inverted. When negate the left, foward and backwards becomes negated.*/
+    }
     
     
     @Override

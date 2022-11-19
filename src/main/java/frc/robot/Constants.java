@@ -16,9 +16,10 @@ package frc.robot;
 public final class Constants {
     public static final int bottomFlyWheelMotor = 7;
     public static final int topFlyWheelMotor = 8;
-    public static final double bottomFlyWheelMotorSetSpeed = 0.5;
-    public static final double topFlyWheelMotorSetSpeed = 0.5;
+    public static final double bottomFlyWheelMotorSetSpeed = .75;
+    public static final double topFlyWheelMotorSetSpeed = .75;
     public static final int DriveJoystick = 0;
     public static final int indexMotorID = 10;
+    public static final int OperatorController = 1;
 
 }
