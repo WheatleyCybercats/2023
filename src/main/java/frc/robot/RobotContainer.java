@@ -22,10 +22,10 @@ public class RobotContainer
     
     private final FlywheelCommand flywheelCommand = new FlywheelCommand(flywheel);
     private final ColorSensor ColorSensor = new ColorSensor();
-    private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
     public static Joystick operatorController = new Joystick(Constants.OperatorController);
     private final DriveTrain drivetrain = new DriveTrain();
+
     public RobotContainer()
     {
         // Configure the button bindings
@@ -38,8 +38,6 @@ public class RobotContainer
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
         spinButton.whileHeld(flywheelCommand);
-        JoystickButton colorSensorButton = new JoystickButton(driverController, 4);
-        colorSensorButton.whileHeld(ColorSensorCommand);
     }
     
     

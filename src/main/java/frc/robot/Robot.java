@@ -9,6 +9,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
+import frc.robot.commands.ColorSensorCommand;
+import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -23,8 +25,10 @@ public class Robot extends TimedRobot
     private Command autonomousCommand;
     
     private RobotContainer robotContainer;
-    private Joystick joystick = new Joystick(0);
-    private DriveTrain driveTrain = new DriveTrain();
+    private final Joystick joystick = new Joystick(0);
+    private final DriveTrain driveTrain = new DriveTrain();
+    private final ColorSensor ColorSensor = new ColorSensor();
+    private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
     
     
     /**
@@ -103,6 +107,9 @@ public class Robot extends TimedRobot
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
+
+        ColorSensorCommand.execute();
+
         double speed = joystick.getRawAxis(1) * 0.8;
         if (speed < 0.03 && speed > -0.03)
         {
@@ -117,11 +124,8 @@ public class Robot extends TimedRobot
         double left = speed + turn;
         double right = speed - turn;
 
-        /**When switched the + and -, both front, back and side becomes inverted.*/
-
         driveTrain.setRightMotors(right);
         driveTrain.setLeftMotors(left);
-        /**when negate the right, the turning becomes inverted. When negate the left, foward and backwards becomes negated.*/
     }
     
     

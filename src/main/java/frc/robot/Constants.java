@@ -14,6 +14,8 @@ package frc.robot;
  * constants are needed, to reduce verbosity.
  */
 public final class Constants {
+    public static final String teamColor = "Blue";
+
     public static final int bottomFlyWheelMotor = 7;
     public static final int topFlyWheelMotor = 8;
     public static final double bottomFlyWheelMotorSetSpeed = .75;
@@ -21,5 +23,7 @@ public final class Constants {
     public static final int DriveJoystick = 0;
     public static final int indexMotorID = 10;
     public static final int OperatorController = 1;
+    public static final int spinTake = 6;
+    public static final int intakeRoller = 9;
 
 }

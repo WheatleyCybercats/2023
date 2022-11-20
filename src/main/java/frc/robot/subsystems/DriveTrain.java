@@ -5,29 +5,38 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import com.ctre.phoenix.motorcontrol.can.WPI_TalonFX;
 
 
 public class DriveTrain extends SubsystemBase{
-    private final WPI_TalonFX leftMotor1 = new WPI_TalonFX(3);
-    private final WPI_TalonFX leftMotor2 = new WPI_TalonFX(4);
-    private final WPI_TalonFX rightMotor1 = new WPI_TalonFX(1);
-    private final WPI_TalonFX rightMotor2 = new WPI_TalonFX(2);
+    private final WPI_TalonFX leftLeader = new WPI_TalonFX(3);
+    private final WPI_TalonFX rightLeader = new WPI_TalonFX(1);
+    private final WPI_TalonFX leftFollower = new WPI_TalonFX(4);
+    private final WPI_TalonFX rightFollower = new WPI_TalonFX(2);
+    private final MotorControllerGroup leftGroup = new MotorControllerGroup(leftLeader,leftFollower);
+    private final MotorControllerGroup rightGroup = new MotorControllerGroup(rightLeader,rightFollower);
 
 
     public void setLeftMotors(double speed){
-        leftMotor1.set(speed);
-        leftMotor2.set(speed);
+        leftGroup.set(speed);
     }
     public void setRightMotors(double speed){
-        rightMotor1.set(speed);
-        rightMotor2.set(speed);
+        rightGroup.set(speed);
     }
     public DriveTrain(){
-        leftMotor1.setInverted(true);
-        leftMotor2.setInverted(true);
-        rightMotor1.setInverted(false);
-        rightMotor2.setInverted(false);
+        leftFollower.set(ControlMode.Follower, leftLeader.getDeviceID());
+        rightFollower.set(ControlMode.Follower, rightLeader.getDeviceID());
+        leftLeader.setInverted(true);
+        leftFollower.setInverted(true);
+        rightLeader.setInverted(false);
+        rightFollower.setInverted(false);
+        leftLeader.setNeutralMode(NeutralMode.Brake);
+        rightLeader.setNeutralMode(NeutralMode.Brake);
+        leftFollower.setNeutralMode(NeutralMode.Brake);
+        rightFollower.setNeutralMode(NeutralMode.Brake);
     }
 }

@@ -1,5 +1,8 @@
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.*;
 import edu.wpi.first.wpilibj.I2C;
 import edu.wpi.first.wpilibj.util.Color;
@@ -11,34 +14,33 @@ public class ColorSensor extends SubsystemBase {
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final ColorMatch colorMatcher = new ColorMatch();
-    private final CANSparkMax indexer = new CANSparkMax(Constants.indexMotorID, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private final VictorSPX indexer = new VictorSPX(Constants.indexMotorID);
     private final Color kBlueTarget = new Color(0.143, 0.427, 0.429);
     private final Color kRedTarget = new Color(0.561, 0.232, 0.114);
-
-    private String colorString = "NoColor";
 
     /**Used to specify the colors based on enviroment using RGB values*/
 
     public ColorSensor(){
-        colorMatcher.addColorMatch(kBlueTarget);
+        indexer.setNeutralMode(NeutralMode.Brake);
+
+        Color kBlueTarget = new Color(0.143, 0.427, 0.429);
+        Color kRedTarget = new Color(0.561, 0.232, 0.114);
         colorMatcher.addColorMatch(kRedTarget);
+        colorMatcher.addColorMatch(kBlueTarget);
     }
 
     @Override
     public void periodic(){
         // This method will be called once per scheduler run
-        Color detectedColor = colorSensor.getColor();
-        ColorMatchResult match = colorMatcher.matchClosestColor(detectedColor);
-        if (match.color == kBlueTarget) {
-            colorString = "blue";
-        } else if (match.color == kRedTarget) {
-            colorString = "red";
-        } else {
-            colorString = "None";
+        if(colorSensor.getProximity() > 100){
+            if (colorMatcher.matchClosestColor(colorSensor.getColor()).color == kRedTarget) {
+                if (Constants.teamColor.equalsIgnoreCase(colorMatcher.matchClosestColor(colorSensor.getColor()).color.toString())) {
+                    setIndexer(0.8);
+                } else {
+                    setIndexer(-0.8);
+                }
+            }
         }
-
-        setMotorSpeed();
-
     }
 
 
@@ -47,21 +49,11 @@ public class ColorSensor extends SubsystemBase {
         // This method will be called once per scheduler run during simulation
     }
 
-    public void setMotorSpeed(){
-        switch(colorString){
-            case "blue":
-                indexer.set(1);
-                break;
-            case "red":
-                indexer.set(1);
-                break;
-            default:
-                indexer.set(1);
-                break;
-        }
+    public void setIndexer(double speed){
+        indexer.set(ControlMode.PercentOutput,speed);
     }
 
     public void stopMotor(){
-        indexer.set(0);
+        indexer.set(ControlMode.PercentOutput,0);
     }
 }
