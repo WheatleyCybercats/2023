@@ -34,11 +34,6 @@ public class Flywheel extends SubsystemBase
         // This method will be called once per scheduler run during simulation
     }
 
-    private void setMotor(double speed){
-        //sets the speed of the bottom flywheel motor
-        bottomFlywheelmotor.set(speed);
-    }
-
     public void setBottomFlywheelmotor(){
         bottomFlywheelmotor.set(Constants.bottomFlyWheelMotorSetSpeed);
     }

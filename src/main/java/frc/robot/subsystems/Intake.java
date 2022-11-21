@@ -5,17 +5,25 @@
 
 package frc.robot.subsystems;
 
+import com.ctre.phoenix.motorcontrol.ControlMode;
+import com.ctre.phoenix.motorcontrol.NeutralMode;
+import com.ctre.phoenix.motorcontrol.can.VictorSPX;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel;
+import edu.wpi.first.wpilibj.DoubleSolenoid;
+import edu.wpi.first.wpilibj.Joystick;
+import edu.wpi.first.wpilibj.PneumaticsModuleType;
+import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.SubsystemBase;
 import frc.robot.Constants;
 
 public class Intake extends SubsystemBase
 {
-    //TODO - How does intake work?
 
-    private final CANSparkMax Intake = new CANSparkMax(Constants.spinTake, CANSparkMaxLowLevel.MotorType.kBrushless);
-    private final CANSparkMax IntakeMotor = new CANSparkMax(Constants.intakeRoller, CANSparkMaxLowLevel.MotorType.kBrushless);
+    private final DoubleSolenoid intakeSolenoid = new DoubleSolenoid(PneumaticsModuleType.CTREPCM, Constants.solenoidID, Constants.solenoid2ID);
+    private final VictorSPX intakeRoller = new VictorSPX(Constants.intakeRoller);
+    private final CANSparkMax moveIntakeMotor = new CANSparkMax(Constants.spinTake, CANSparkMaxLowLevel.MotorType.kBrushless);
+
     public Intake() {
 
     }
@@ -34,18 +42,24 @@ public class Intake extends SubsystemBase
         // This method will be called once per scheduler run during simulation
     }
 
-    private void setIntake(double speed){
+    private void setIntakeRoller(double speed){
         //sets the speed of the bottom flywheel motor
-        Intake.set(speed);
+        intakeRoller.set(ControlMode.PercentOutput,speed);
     }
 
-    public void setIntakeMotor(){
-        IntakeMotor.set(Constants.bottomFlyWheelMotorSetSpeed);
+    public void setIntakeMotor(double speed){
+        moveIntakeMotor.set(speed);
     }
 
+    public void bringIntakeDown(){
+        intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+    }
 
+    public void bringIntakeUp(){
+        intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+    }
     public void stopMotor(){
-        Intake.set(0);
-        IntakeMotor.set(0);
+        intakeRoller.set(ControlMode.PercentOutput,0);
+        moveIntakeMotor.set(0);
     }
 }

@@ -25,5 +25,7 @@ public final class Constants {
     public static final int OperatorController = 1;
     public static final int spinTake = 6;
     public static final int intakeRoller = 9;
-
+    public static final int solenoidID = 0;
+    public static final int solenoid2ID = 1;
+    public static final double IntakeSpeed = .7;
 }

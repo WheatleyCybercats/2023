@@ -10,21 +10,27 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
+import frc.robot.commands.BringIntakeUpCommand;
 import frc.robot.commands.ColorSensorCommand;
 import frc.robot.commands.FlywheelCommand;
+import frc.robot.commands.IntakeBallCommand;
 import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 import frc.robot.subsystems.Flywheel;
+import frc.robot.subsystems.Intake;
+
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
     private final Flywheel flywheel = new Flywheel();
-    
+
     private final FlywheelCommand flywheelCommand = new FlywheelCommand(flywheel);
-    private final ColorSensor ColorSensor = new ColorSensor();
+    private final Intake intake = new Intake();
+    private final IntakeBallCommand IntakeBallCommand = new IntakeBallCommand(intake);
+    private final BringIntakeUpCommand BringIntakeUpCommand = new BringIntakeUpCommand(intake);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
-    public static Joystick operatorController = new Joystick(Constants.OperatorController);
-    private final DriveTrain drivetrain = new DriveTrain();
+
+
 
     public RobotContainer()
     {
@@ -38,9 +44,12 @@ public class RobotContainer
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
         spinButton.whileHeld(flywheelCommand);
+        JoystickButton intakeButton = new JoystickButton(driverController, 1);
+        intakeButton.whileHeld(IntakeBallCommand);
+        intakeButton.whenReleased(BringIntakeUpCommand);
     }
-    
-    
+
+
     /**
      * Use this to pass the autonomous command to the main {@link Robot} class.
      *

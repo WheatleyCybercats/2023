@@ -23,14 +23,14 @@ import frc.robot.subsystems.DriveTrain;
 public class Robot extends TimedRobot
 {
     private Command autonomousCommand;
-    
+
     private RobotContainer robotContainer;
     private final Joystick joystick = new Joystick(0);
     private final DriveTrain driveTrain = new DriveTrain();
     private final ColorSensor ColorSensor = new ColorSensor();
     private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
-    
-    
+
+
     /**
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
@@ -42,8 +42,8 @@ public class Robot extends TimedRobot
         // autonomous chooser on the dashboard.
         robotContainer = new RobotContainer();
     }
-    
-    
+
+
     /**
      * This method is called every robot packet, no matter the mode. Use this for items like
      * diagnostics that you want ran during disabled, autonomous, teleoperated and test.
@@ -60,36 +60,36 @@ public class Robot extends TimedRobot
         // block in order for anything in the Command-based framework to work.
         CommandScheduler.getInstance().run();
     }
-    
-    
+
+
     /** This method is called once each time the robot enters Disabled mode. */
     @Override
     public void disabledInit() {}
-    
-    
+
+
     @Override
     public void disabledPeriodic() {}
-    
-    
+
+
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
     public void autonomousInit()
     {
         autonomousCommand = robotContainer.getAutonomousCommand();
-        
+
         // schedule the autonomous command (example)
         if (autonomousCommand != null)
         {
             autonomousCommand.schedule();
         }
     }
-    
-    
+
+
     /** This method is called periodically during autonomous. */
     @Override
     public void autonomousPeriodic() {}
-    
-    
+
+
     @Override
     public void teleopInit()
     {
@@ -102,8 +102,8 @@ public class Robot extends TimedRobot
             autonomousCommand.cancel();
         }
     }
-    
-    
+
+
     /** This method is called periodically during operator control. */
     @Override
     public void teleopPeriodic() {
@@ -127,16 +127,16 @@ public class Robot extends TimedRobot
         driveTrain.setRightMotors(right);
         driveTrain.setLeftMotors(left);
     }
-    
-    
+
+
     @Override
     public void testInit()
     {
         // Cancels all running commands at the start of test mode.
         CommandScheduler.getInstance().cancelAll();
     }
-    
-    
+
+
     /** This method is called periodically during test mode. */
     @Override
     public void testPeriodic() {}
