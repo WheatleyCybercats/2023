@@ -52,10 +52,12 @@ public class Intake extends SubsystemBase
     }
 
     public void bringIntakeDown(){
+
         intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
 
     public void bringIntakeUp(){
+
         intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
     public void stopMotor(){

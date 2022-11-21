@@ -10,14 +10,8 @@ import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.XboxController;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.button.JoystickButton;
-import frc.robot.commands.BringIntakeUpCommand;
-import frc.robot.commands.ColorSensorCommand;
-import frc.robot.commands.FlywheelCommand;
-import frc.robot.commands.IntakeBallCommand;
-import frc.robot.subsystems.ColorSensor;
-import frc.robot.subsystems.DriveTrain;
-import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Intake;
+import frc.robot.commands.*;
+import frc.robot.subsystems.*;
 
 public class RobotContainer
 {
@@ -30,7 +24,8 @@ public class RobotContainer
     private final BringIntakeUpCommand BringIntakeUpCommand = new BringIntakeUpCommand(intake);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
 
-
+    private final Indexer indexer = new Indexer();
+    private final IndexerCommand indexerCommand = new IndexerCommand(indexer);
 
     public RobotContainer()
     {
@@ -47,6 +42,8 @@ public class RobotContainer
         JoystickButton intakeButton = new JoystickButton(driverController, 1);
         intakeButton.whileHeld(IntakeBallCommand);
         intakeButton.whenReleased(BringIntakeUpCommand);
+        JoystickButton releaseBall = new JoystickButton(driverController, 4);
+        releaseBall.whileHeld(indexerCommand);
     }
 
 
