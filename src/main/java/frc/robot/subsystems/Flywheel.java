@@ -39,7 +39,7 @@ public class Flywheel extends SubsystemBase
     }
 
     public void setTopFlywheelmotor(){
-        topFlywheelmotor.set(Constants.topFlyWheelMotorSetSpeed);
+        topFlywheelmotor.set(-Constants.topFlyWheelMotorSetSpeed);
     }
 
     public void stopMotor(){

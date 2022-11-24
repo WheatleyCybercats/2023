@@ -25,14 +25,18 @@ public class Intake extends SubsystemBase
     private final CANSparkMax moveIntakeMotor = new CANSparkMax(Constants.spinTake, CANSparkMaxLowLevel.MotorType.kBrushless);
 
     public Intake() {
-
+        intakeRoller.setInverted(false);
+        intakeRoller.setNeutralMode(NeutralMode.Brake);
+         intakeSolenoid.set(DoubleSolenoid.Value.kForward);
     }
 
 
     @Override
     public void periodic()
     {
-        // This method will be called once per scheduler run
+        bringIntakeDown();
+        setIntakeMotor(-1);
+        setIntakeRoller(-0.8);
     }
 
 
@@ -42,19 +46,21 @@ public class Intake extends SubsystemBase
         // This method will be called once per scheduler run during simulation
     }
 
-    private void setIntakeRoller(double speed){
+    public void setIntakeRoller(double speed){
         //sets the speed of the bottom flywheel motor
-        intakeRoller.set(ControlMode.PercentOutput,speed);
+        intakeRoller.set(ControlMode.PercentOutput, speed);
     }
 
     public void setIntakeMotor(double speed){
-        moveIntakeMotor.set(speed);
+        moveIntakeMotor.set(-speed);
     }
+    //The spinny red and  black thingy
 
     public void bringIntakeDown(){
 
         intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
     }
+
 
     public void bringIntakeUp(){
 

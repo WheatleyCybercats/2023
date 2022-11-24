@@ -40,9 +40,8 @@ public class IntakeBallCommand extends CommandBase
     // Called every time the scheduler runs while the command is scheduled.
     @Override
     public void execute() {
-        subsystem.bringIntakeDown();
-        subsystem.setIntakeMotor(1);
-        subsystem.setIntakeMotor(-Constants.IntakeSpeed);
+        //subsystem.bringIntakeDown();
+        subsystem.periodic();
     }
 
 

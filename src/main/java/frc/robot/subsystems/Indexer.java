@@ -13,7 +13,7 @@ public class Indexer extends SubsystemBase {
     private final I2C.Port i2cPort = I2C.Port.kOnboard;
     private final ColorSensorV3 colorSensor = new ColorSensorV3(i2cPort);
     private final VictorSPX indexer = new VictorSPX(Constants.indexMotorID);
-    public boolean ballInIndexer = false;
+    private final VictorSPX intakeRoller = new VictorSPX(Constants.intakeRoller);
 
     public Indexer(){
         indexer.setNeutralMode(NeutralMode.Brake);
@@ -22,13 +22,12 @@ public class Indexer extends SubsystemBase {
     @Override
     public void periodic(){
         // This method will be called once per scheduler run
-        if(colorSensor.getProximity() > 100){
-            setIndexer(0.8);
-        }
+            setIndexer(0.1);
     }
 
     public void releaseBall(){
-        setIndexer(-0.8);
+        setIndexer(1);
+        intakeRoller.set(ControlMode.PercentOutput, 1);
     }
 
     @Override

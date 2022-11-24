@@ -39,7 +39,8 @@ public class RobotContainer
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
         spinButton.whileHeld(flywheelCommand);
-        JoystickButton intakeButton = new JoystickButton(driverController, 1);
+        spinButton.whenPressed(indexerCommand);
+        JoystickButton intakeButton = new JoystickButton(driverController, 5);
         intakeButton.whileHeld(IntakeBallCommand);
         intakeButton.whenReleased(BringIntakeUpCommand);
         JoystickButton releaseBall = new JoystickButton(driverController, 4);

@@ -35,9 +35,9 @@ public class ColorSensor extends SubsystemBase {
         if(colorSensor.getProximity() > 100){
             if (colorMatcher.matchClosestColor(colorSensor.getColor()).color == kRedTarget) {
                 if (Constants.teamColor.equalsIgnoreCase(colorMatcher.matchClosestColor(colorSensor.getColor()).color.toString())) {
-                    setIndexer(0.8);
+                    setIndexer(0.1);
                 } else {
-                    setIndexer(-0.8);
+                    setIndexer(-0.1);
                 }
             }
         }

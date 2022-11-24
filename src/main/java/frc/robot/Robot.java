@@ -73,8 +73,7 @@ public class Robot extends TimedRobot
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
-    public void autonomousInit()
-    {
+    public void autonomousInit() {
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -108,15 +107,15 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
 
-        ColorSensorCommand.execute();
+        //ColorSensorCommand.execute();
 
         double speed = joystick.getRawAxis(1) * 0.8;
-        if (speed < 0.03 && speed > -0.03)
+        if (speed < 0.04 && speed > -0.04)
         {
             speed = 0;
         }
         double turn = joystick.getRawAxis(4) * 0.7;
-        if (turn < 0.02 && turn > -0.02)
+        if (turn < 0.03 && turn > -0.03)
         {
             turn = 0;
         }
