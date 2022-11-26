@@ -7,10 +7,11 @@ package frc.robot;
 
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.TimedRobot;
+import edu.wpi.first.wpilibj.Timer;
+import edu.wpi.first.wpilibj.motorcontrol.MotorControllerGroup;
 import edu.wpi.first.wpilibj2.command.Command;
 import edu.wpi.first.wpilibj2.command.CommandScheduler;
 import frc.robot.commands.ColorSensorCommand;
-import frc.robot.subsystems.ColorSensor;
 import frc.robot.subsystems.DriveTrain;
 
 
@@ -35,6 +36,12 @@ public class Robot extends TimedRobot
      * This method is run when the robot is first started up and should be used for any
      * initialization code.
      */
+private final WPI_TalonFX leftLeader = new WPI_TalonFX(3);
+private final WPI_TalonFX rightLeader = new WPI_TalonFX(1);
+private final WPI_TalonFX leftFollower = new WPI_TalonFX(4);
+private final WPI_TalonFX rightFollower = new WPI_TalonFX(2);
+
+
     @Override
     public void robotInit()
     {
@@ -73,7 +80,8 @@ public class Robot extends TimedRobot
 
     /** This autonomous runs the autonomous command selected by your {@link RobotContainer} class. */
     @Override
-    public void autonomousInit() {
+    public void autonomousInit()
+    {
         autonomousCommand = robotContainer.getAutonomousCommand();
 
         // schedule the autonomous command (example)
@@ -86,8 +94,22 @@ public class Robot extends TimedRobot
 
     /** This method is called periodically during autonomous. */
     @Override
-    public void autonomousPeriodic() {}
+    public void autonomousPeriodic() {
+        double time = Timer.getFPGATimestamp();
 
+        if (time < 3) {
+            leftFollower.set(0.5);
+            rightLeader.set(0.5);
+            leftFollower.set(-0.5);
+            rightFollower.set(-0.5);
+        }
+        else {
+            leftFollower.set(0.5);
+            rightLeader.set(0.5);
+            leftFollower.set(-0.5);
+            rightFollower.set(-0.5);
+        }
+    }
 
     @Override
     public void teleopInit()
@@ -96,10 +118,11 @@ public class Robot extends TimedRobot
         // teleop starts running. If you want the autonomous to
         // continue until interrupted by another command, remove
         // this line or comment it out.
-        if (autonomousCommand != null)
+        /*if (autonomousCommand != null)
         {
             autonomousCommand.cancel();
-        }
+        } */
+
     }
 
 
@@ -107,15 +130,15 @@ public class Robot extends TimedRobot
     @Override
     public void teleopPeriodic() {
 
-        //ColorSensorCommand.execute();
+        ColorSensorCommand.execute();
 
         double speed = joystick.getRawAxis(1) * 0.8;
-        if (speed < 0.04 && speed > -0.04)
+        if (speed < 0.03 && speed > -0.03)
         {
             speed = 0;
         }
         double turn = joystick.getRawAxis(4) * 0.7;
-        if (turn < 0.03 && turn > -0.03)
+        if (turn < 0.02 && turn > -0.02)
         {
             turn = 0;
         }
@@ -125,6 +148,7 @@ public class Robot extends TimedRobot
 
         driveTrain.setRightMotors(right);
         driveTrain.setLeftMotors(left);
+        //1 = full speed forward, -1 = full speed backwards
     }
 
 
