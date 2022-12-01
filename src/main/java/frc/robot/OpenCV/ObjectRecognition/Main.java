@@ -1,6 +1,7 @@
 package frc.robot.OpenCV.ObjectRecognition;
 
 import nu.pattern.OpenCV;
+import org.opencv.core.Core;
 import org.opencv.core.Mat;
 import org.opencv.core.Scalar;
 import org.opencv.core.Size;
@@ -43,7 +44,7 @@ public class Main {
             objectNameAndColor.put(objectName, new Color(r.nextInt(255), r.nextInt(255), r.nextInt(255)));
         }
 
-        Net model = Dnn.readNet("C:\\Users\\Peter Ouyang\\IdeaProjects\\FRC\\src\\main\\java\\frc\\robot\\OpenCV\\ObjectRecognition\\frozen_inference_graph.pb", "C:\\Users\\Peter Ouyang\\IdeaProjects\\FRC\\src\\main\\java\\frc\\robot\\OpenCV\\ObjectRecognition\\mobilenet.pbtxt", "TensorFlow");
+        Net model = Dnn.readNet("yolov3-tiny.weights", "yolov3-tiny.cfg");
 
         model.setPreferableBackend(Dnn.DNN_BACKEND_CUDA);
         model.setPreferableTarget(Dnn.DNN_TARGET_CUDA);

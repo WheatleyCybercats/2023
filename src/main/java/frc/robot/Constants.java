@@ -28,4 +28,6 @@ public final class Constants {
     public static final int solenoidID = 0;
     public static final int solenoid2ID = 1;
     public static final double IntakeSpeed = .7;
+    public static final int climbMotor = 5;
+    public static final double climbMotorSetSpeed = 1;
 }
