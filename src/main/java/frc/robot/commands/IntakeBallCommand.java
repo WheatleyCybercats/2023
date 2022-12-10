@@ -41,14 +41,14 @@ public class IntakeBallCommand extends CommandBase
     @Override
     public void execute() {
         //subsystem.bringIntakeDown();
-        subsystem.periodic();
+        subsystem.bringIntakeDown();
     }
 
 
     // Called once the command ends or is interrupted.
     @Override
     public void end(boolean interrupted) {
-        subsystem.stopMotor();
+        subsystem.bringIntakeUp();
     }
 
 

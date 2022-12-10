@@ -27,8 +27,8 @@ public class Robot extends TimedRobot
     private RobotContainer robotContainer;
     private final Joystick joystick = new Joystick(0);
     private final DriveTrain driveTrain = new DriveTrain();
-    private final ColorSensor ColorSensor = new ColorSensor();
-    private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
+    //private final ColorSensor ColorSensor = new ColorSensor();
+    //private final ColorSensorCommand ColorSensorCommand = new ColorSensorCommand(ColorSensor);
 
 
     /**

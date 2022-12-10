@@ -32,12 +32,7 @@ public class Intake extends SubsystemBase
 
 
     @Override
-    public void periodic()
-    {
-        bringIntakeDown();
-        setIntakeMotor(-1);
-        setIntakeRoller(-0.8);
-    }
+    public void periodic() {}
 
 
     @Override
@@ -57,17 +52,21 @@ public class Intake extends SubsystemBase
     //The spinny red and  black thingy
 
     public void bringIntakeDown(){
-
         intakeSolenoid.set(DoubleSolenoid.Value.kReverse);
+        setIntakeMotor(-1);
+        setIntakeRoller(-0.7);
+
     }
 
 
     public void bringIntakeUp(){
-
         intakeSolenoid.set(DoubleSolenoid.Value.kForward);
+        setIntakeMotor(0);
+        setIntakeRoller(0);
     }
     public void stopMotor(){
         intakeRoller.set(ControlMode.PercentOutput,0);
         moveIntakeMotor.set(0);
+        setIntakeMotor(0);
     }
 }

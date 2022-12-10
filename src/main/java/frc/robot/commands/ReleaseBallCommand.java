@@ -2,12 +2,11 @@ package frc.robot.commands;
 
 import edu.wpi.first.wpilibj2.command.CommandBase;
 import frc.robot.subsystems.Flywheel;
-import frc.robot.subsystems.Indexer;
 
 public class ReleaseBallCommand extends CommandBase{
-    private final Indexer subsystem;
+    private final Flywheel subsystem;
 
-    public ReleaseBallCommand(Indexer subsystem)
+    public ReleaseBallCommand(Flywheel subsystem)
     {
         this.subsystem = subsystem;
         // Use addRequirements() here to declare subsystem dependencies.

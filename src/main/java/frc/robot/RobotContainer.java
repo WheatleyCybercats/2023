@@ -16,16 +16,17 @@ import frc.robot.subsystems.*;
 public class RobotContainer
 {
     // The robot's subsystems and commands are defined here...
+    private final Climb ClimbB = new Climb();
+    private final ClimbDownCommand ClimbDownCommand= new ClimbDownCommand(ClimbB);
+    private final ClimbUpCommand ClimbUpCommand= new ClimbUpCommand(ClimbB);
     private final Flywheel flywheel = new Flywheel();
 
     private final FlywheelCommand flywheelCommand = new FlywheelCommand(flywheel);
     private final Intake intake = new Intake();
     private final IntakeBallCommand IntakeBallCommand = new IntakeBallCommand(intake);
-    private final BringIntakeUpCommand BringIntakeUpCommand = new BringIntakeUpCommand(intake);
+    //private final BringIntakeUpCommand BringIntakeUpCommand = new BringIntakeUpCommand(intake);
+    private final ReleaseBallCommand ReleaseBallCommand = new ReleaseBallCommand(flywheel);
     public static Joystick driverController = new Joystick(Constants.DriveJoystick);
-
-    private final Indexer indexer = new Indexer();
-    private final IndexerCommand indexerCommand = new IndexerCommand(indexer);
 
     public RobotContainer()
     {
@@ -39,12 +40,15 @@ public class RobotContainer
         // See https://docs.wpilib.org/en/stable/docs/software/commandbased/binding-commands-to-triggers.html
         JoystickButton spinButton = new JoystickButton(driverController,3);
         spinButton.whileHeld(flywheelCommand);
-        spinButton.whenPressed(indexerCommand);
         JoystickButton intakeButton = new JoystickButton(driverController, 5);
         intakeButton.whileHeld(IntakeBallCommand);
-        intakeButton.whenReleased(BringIntakeUpCommand);
-        JoystickButton releaseBall = new JoystickButton(driverController, 4);
-        releaseBall.whileHeld(indexerCommand);
+        //intakeButton.whenReleased(BringIntakeUpCommand);
+        JoystickButton climbUp = new JoystickButton(driverController, 2);
+        climbUp.whileHeld(ClimbUpCommand);
+        JoystickButton climbDown = new JoystickButton(driverController, 7);
+        climbDown.whileHeld(ClimbDownCommand);
+        JoystickButton releaseBall = new JoystickButton(driverController, 1);
+        releaseBall.whileHeld(ReleaseBallCommand);
     }
 
 
